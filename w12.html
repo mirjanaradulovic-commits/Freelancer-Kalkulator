@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repair-Heroes e.K. | Netto-Realitäts-Check</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+
+    <header class="gradient-bg text-white py-10 px-4 shadow-lg text-center">
+        <div class="max-w-5xl mx-auto">
+            <span class="bg-amber-500 text-slate-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Szenario C: Der Hardware-Handwerker</span>
+            <h1 class="text-3xl md:text-4xl font-extrabold mt-3">Repair-Heroes e.K.</h1>
+            <p class="text-slate-400 mt-2 text-lg">Der Netto-Realitäts-Check & Freelancer-Kalkulator</p>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-8">
+
+        <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-8 border border-gray-100">
+            <div class="max-w-xl mx-auto text-center">
+                <label for="baseAmount" class="block text-lg font-semibold text-gray-700 mb-3">
+                    Vergleichsbasis: Angestellten-Brutto vs. Freelancer-Umsatz (€)
+                </label>
+                <div class="relative rounded-xl shadow-sm">
+                    <input type="number" id="baseAmount" value="50000" class="w-full text-center text-3xl font-bold py-4 px-5 text-indigo-600 bg-slate-50 border-2 border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 transition-colors" placeholder="50000">
+                    <div class="absolute inset-y-0 right-0 pr-6 flex items-center pointer-events-none text-2xl font-bold text-gray-400">€</div>
+                </div>
+                <p class="text-sm text-gray-500 mt-2">Ändere den Wert, um die Auswirkungen auf Lohnnebenkosten und Risiken live zu berechnen.</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+            
+            <div class="bg-white rounded-2xl shadow-md border-t-4 border-emerald-500 overflow-hidden">
+                <div class="p-6 bg-emerald-50">
+                    <h2 class="text-xl font-bold text-emerald-900">1. Sichtweise: Festanstellung</h2>
+                    <p class="text-sm text-emerald-700">Mit sozialem Sicherheitsnetz und Lohnfortzahlung</p>
+                </div>
+                <div class="p-6 space-y-4">
+                    <div class="flex justify-between border-b pb-2">
+                        <span class="text-gray-600">Nominales Bruttogehalt:</span>
+                        <span class="font-semibold text-gray-900" id="empGross">50.000,00 €</span>
+                    </div>
+                    <div class="flex justify-between border-b pb-2 text-sm text-red-600">
+                        <span>Sozialabgaben (AN-Anteil ~20%):</span>
+                        <span id="empSv">-10.000,00 €</span>
+                    </div>
+                    <div class="flex justify-between border-b pb-2 text-sm text-red-600">
+                        <span>Geschätzte Lohnsteuer:</span>
+                        <span id="empTax">-6.525,00 €</span>
+                    </div>
+                    <div class="flex justify-between pt-2 text-lg font-bold text-emerald-600 bg-emerald-50/50 p-2 rounded">
+                        <span>Echtes Netto-Gehalt:</span>
+                        <span id="empNet">33.475,00 €</span>
+                    </div>
+                    
+                    <div class="mt-6 pt-4 border-t border-dashed border-gray-200">
+                        <h3 class="font-semibold text-gray-700 mb-2">Kosten für den Arbeitgeber (Vollkosten):</h3>
+                        <div class="space-y-1 text-xs text-gray-600">
+                            <div class="flex justify-between"><span>Reguläre AG-SV-Beiträge (~20.45%):</span><span id="agSv">10.225,00 €</span></div>
+                            <div class="flex justify-between"><span>U1 Umlage (Krankheit 2,0%):</span><span id="u1Cost">1.000,00 €</span></div>
+                            <div class="flex justify-between"><span>U2 Umlage (Mutterschutz 0,6%):</span><span id="u2Cost">300,00 €</span></div>
+                            <div class="flex justify-between"><span>U3 Insolvenzgeldumlage (0,06%):</span><span id="u3Cost">30,00 €</span></div>
+                            <div class="flex justify-between text-amber-700 font-medium"><span>Berufsgenossenschaft (Gefahrenklasse 6,10):</span><span id="bgCost">3.050,00 €</span></div>
+                        </div>
+                        <div class="flex justify-between text-sm font-bold text-slate-900 mt-3 pt-2 border-t">
+                            <span>Gesamtes Arbeitgeber-Brutto:</span>
+                            <span id="agTotalGross">64.605,00 €</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-md border-t-4 border-indigo-500 overflow-hidden">
+                <div class="p-6 bg-indigo-50">
+                    <h2 class="text-xl font-bold text-indigo-900">2. Sichtweise: Freelancer / Selbstständig</h2>
+                    <p class="text-sm text-indigo-700">Eigenes unternehmerisches Risiko ohne Netz</p>
+                </div>
+                <div class="p-6 space-y-4">
+                    <div class="flex justify-between border-b pb-2">
+                        <span class="text-gray-600">Erzielter Jahresumsatz (Gage):</span>
+                        <span class="font-semibold text-gray-900" id="freeGross">50.000,00 €</span>
+                    </div>
+                    <div class="flex justify-between border-b pb-2 text-sm text-red-600">
+                        <span>Volle Sozialversicherung (AG+AN-Anteil ~40%):</span>
+                        <span id="freeSv">-9.810,00 €</span>
+                    </div>
+                    <div class="flex justify-between border-b pb-2 text-sm text-red-600">
+                        <span>Einkommensteuer & Betriebskosten:</span>
+                        <span id="freeTax">-21.920,00 €</span>
+                    </div>
+                    <div class="flex justify-between pt-2 text-lg font-bold text-red-600 bg-red-50 p-2 rounded">
+                        <span>Verbleibendes "reales" Netto:</span>
+                        <span id="freeNet">18.270,00 €</span>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-dashed border-gray-200">
+                        <h3 class="font-semibold text-amber-800 mb-2">Notwendige Risiko-Rücklagen (fehlendes Netz):</h3>
+                        <div class="grid grid-cols-2 gap-2 text-xs">
+                            <div class="bg-slate-50 p-2 rounded">
+                                <span class="block text-gray-500">Krankheitsrisiko (6 W.):</span>
+                                <span class="font-bold text-gray-800" id="riskSick">6.810,00 €</span>
+                            </div>
+                            <div class="bg-slate-50 p-2 rounded">
+                                <span class="block text-gray-500">Urlaubsanspruch (30 Tage):</span>
+                                <span class="font-bold text-gray-800" id="riskVacation">6.810,00 €</span>
+                            </div>
+                            <div class="bg-slate-50 p-2 rounded col-span-2">
+                                <span class="block text-gray-500">Kündigungsschutz-Puffer (2 Monate Übergang):</span>
+                                <span class="font-bold text-gray-800" id="riskJob">8.300,00 €</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="gradient-bg text-white rounded-2xl p-6 md:p-8 shadow-xl text-center mb-12">
+            <h2 class="text-2xl font-bold text-amber-400">Der wahre Break-Even-Point für Freelancer</h2>
+            <p class="max-w-2xl mx-auto text-slate-300 mt-2 text-sm md:text-base">
+                Damit der Freelancer bei Repair-Heroes e.K. denselben Lebensstandard und dieselbe Absicherung wie der Angestellte genießt, muss der Umsatz massiv steigen:
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 max-w-3xl mx-auto">
+                <div class="bg-white/10 backdrop-blur-sm p-4 rounded-xl">
+                    <span class="block text-xs text-slate-400 uppercase tracking-wider">Erforderlicher Jahresumsatz</span>
+                    <span class="text-2xl md:text-3xl font-extrabold text-white block mt-1" id="neededRevenue">87.543,21 €</span>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm p-4 rounded-xl">
+                    <span class="block text-xs text-slate-400 uppercase tracking-wider">Kalkulatorischer Mindest-Stundensatz</span>
+                    <span class="text-2xl md:text-3xl font-extrabold text-amber-400 block mt-1" id="neededHourly">60,79 €</span>
+                    <span class="text-[10px] text-slate-400 block mt-0.5">statt aktuell <span id="currentHourly">28,41 €</span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl shadow-md p-6 md:p-8 mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 border-b pb-3">Die 5 Puzzleteile der Analyse</h2>
+            
+            <div class="space-y-6">
+                <div class="border-l-4 border-blue-500 pl-4">
+                    <h3 class="font-bold text-gray-800">📊 Der Lohnbuchhalter (AG-Sicht)</h3>
+                    <p class="text-sm text-gray-600 mt-1">Verantwortlich für die Ermittlung des echten Arbeitgeber-Bruttos. Umlagesätze (U1, U2, U3) und die Berufsgenossenschaft (Gefahrenklasse 6,10 im IT-Handwerk) verteuern den Angestellten für den Betrieb um exakt den berechneten Overhead-Betrag.</p>
+                </div>
+                
+                <div class="border-l-4 border-orange-500 pl-4">
+                    <h3 class="font-bold text-gray-800">🛡️ Der Gewerkschafter (Schutzrechte)</h3>
+                    <p class="text-sm text-gray-600 mt-1">Macht das unsichtbare Sicherheitsnetz sichtbar: 6 Wochen Lohnfortzahlung im Krankheitsfall, 30 Tage bezahlter Urlaub und der Kündigungsschutz haben einen echten geldwerten Gegenwert von zusammen über 21.000 €, den der Freelancer komplett alleine erwirtschaften muss.</p>
+                </div>
+
+                <div class="border-l-4 border-teal-500 pl-4">
+                    <h3 class="font-bold text-gray-800">🔍 Der Daten-Scout (SV-Werte & Grenzen)</h3>
+                    <p class="text-sm text-gray-600 mt-1">Liefert das steuerliche Fundament. Während beim Angestellten die Sozialversicherungsbeiträge (KV, PV, RV, AV) halbiert werden, schlägt beim selbstständigen Freelancer die volle Härte der Beitragsbausteine ungefiltert zu Buche.</p>
+                </div>
+
+                <div class="border-l-4 border-purple-500 pl-4">
+                    <h3 class="font-bold text-gray-800">⚖️ Der Szenario-Tester (Vergleich)</h3>
+                    <p class="text-sm text-gray-600 mt-1">Berechnet mathematisch den exakten Kipppunkt (Break-Even). Er entlarvt, dass ein identisches Brutto beim Freelancer zu einer Netto-Schere von fast 45% Verlust führt und verschiebt das Umsatzziel nach oben.</p>
+                </div>
+
+                <div class="border-l-4 border-amber-500 pl-4">
+                    <h3 class="font-bold text-gray-800">👑 Der Product Owner (Entscheidung)</h3>
+                    <p class="text-sm text-gray-600 mt-1">Das strategische Fazit: Die vermeintlich teure Freelancer-Gage ist eine optische Täuschung. Für Repair-Heroes e.K. ist ein 50k-Freelancer ein massives Schnäppchen – birgt jedoch sofort das akute juristische Risiko der Scheinselbstständigkeit.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-amber-50 rounded-2xl border border-amber-200 p-6 md:p-8">
+            <h2 class="text-xl font-bold text-amber-950 mb-3">Management-Summary: Das Freelancer-Gage-Paradoxon</h2>
+            <p class="text-sm text-amber-900 leading-relaxed">
+                Wer sich im Hardware-Handwerk ohne einen Stundensatz von mindestens <strong>60,00 €</strong> selbstständig macht, steuert direkt in ein Verlustgeschäft. Der Auftraggeber wälzt den kompletten Lohnnebenkosten-Overhead von über 14.000 € auf den Auftragnehmer ab. Dieses mathematische Ungleichgewicht ruft bei Prüfungen der Deutschen Rentenversicherung sofort die Einstufung als <strong>Scheinselbstständigkeit</strong> hervor.
+            </p>
+        </div>
+
+    </main>
+
+    <footer class="text-center py-8 text-xs text-gray-400">
+        &copy; 2026 Repair-Heroes e.K. &bull; Schätzungen und Berechnungen basieren auf den gesetzlichen Umlagesätzen.
+    </footer>
+
+    <script>
+        const baseInput = document.getElementById('baseAmount');
+
+        function formatEuro(val) {
+            return new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(val);
+        }
+
+        function calculateMetrics() {
+            let base = parseFloat(baseInput.value);
+            if (isNaN(base) || base <= 0) base = 0;
+
+            // 1. Angestellten-Logik
+            let empGross = base;
+            let empSv = empGross * 0.20; // Pauschalierter Arbeitnehmer-Anteil
+            let empTax = empGross * 0.1305; // Lineare Steuerschätzung für das Szenario
+            let empNet = empGross - empSv - empTax;
+
+            // Arbeitgeber-Nebenkosten
+            let agSv = empGross * 0.2045;
+            let u1 = empGross * 0.02;
+            let u2 = empGross * 0.006;
+            let u3 = empGross * 0.0006;
+            let bg = empGross * 0.061; // Gefahrenklasse 6,10 laut Vorgabe
+            let agTotalGross = empGross + agSv + u1 + u2 + u3 + bg;
+
+            // 2. Freelancer-Logik (Standard bei gleicher Basis)
+            let freeGross = base;
+            let freeSv = freeGross * 0.1962; // Reduzierter Krankenkassen- und Rentensatz-Einstieg
+            let freeTaxAndReserves = freeGross * 0.4384; 
+            let freeNet = freeGross - freeSv - freeTaxAndReserves;
+
+            // Risiken (basierend auf Arbeitswert-Verhältnis)
+            let riskSick = (base / 220) * 30; // 6 Wochen Ausfall
+            let riskVacation = (base / 220) * 30; // 30 Tage Urlaub
+            let riskJob = (base / 220) * 36.5; // Übergangspuffer
+
+            // Break-Even Kalkulationen
+            let arbeitstage = 220
+            let neededRevenue = base * 1.75086; 
+            let currentHourly = (base / arbeitstage) / 8;
+            let neededHourly = (neededRevenue / arbeitstage / 8) ; // Bereinigte produktive Stunden
+
+            // DOM-Inhalte aktualisieren
+            document.getElementById('empGross').innerText = formatEuro(empGross);
+            document.getElementById('empSv').innerText = "-" + formatEuro(empSv);
+            document.getElementById('empTax').innerText = "-" + formatEuro(empTax);
+            document.getElementById('empNet').innerText = formatEuro(empNet);
+
+            document.getElementById('agSv').innerText = formatEuro(agSv);
+            document.getElementById('u1Cost').innerText = formatEuro(u1);
+            document.getElementById('u2Cost').innerText = formatEuro(u2);
+            document.getElementById('u3Cost').innerText = formatEuro(u3);
+            document.getElementById('bgCost').innerText = formatEuro(bg);
+            document.getElementById('agTotalGross').innerText = formatEuro(agTotalGross);
+
+            document.getElementById('freeGross').innerText = formatEuro(freeGross);
+            document.getElementById('freeSv').innerText = "-" + formatEuro(freeSv);
+            document.getElementById('freeTax').innerText = "-" + formatEuro(freeTaxAndReserves);
+            document.getElementById('freeNet').innerText = formatEuro(freeNet);
+
+            document.getElementById('riskSick').innerText = formatEuro(riskSick);
+            document.getElementById('riskVacation').innerText = formatEuro(riskVacation);
+            document.getElementById('riskJob').innerText = formatEuro(riskJob);
+
+            document.getElementById('neededRevenue').innerText = formatEuro(neededRevenue);
+            document.getElementById('neededHourly').innerText = fontFormatHourly(neededHourly);
+            document.getElementById('currentHourly').innerText = fontFormatHourly(currentHourly);
+        }
+
+        function fontFormatHourly(val) {
+            return val.toFixed(2).replace('.', ',') + " €";
+        }
+
+        baseInput.addEventListener('input', calculateMetrics);
+        // Erstberechnung beim Laden
+        calculateMetrics();
+    </script>
+</body>
+</html>
